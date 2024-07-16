@@ -1,0 +1,24 @@
+ID	Feature_ID	Phylum	class	Order	Family	Genus	ncbi_genus	Species	Anti.traits	Iso.Ampli	Alternaria alternata.BXL	Alternaria alternata.DJQ	Epicoccum nigrum.ACCC35878	Pyricularia grisea.hlj2
+B. subtilis BJ32	b.BJ32	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus subtilis	AntiIsolate	isolate	88.31595772	88.98723356	76.86048844	98.0021786
+B. subtilis h8	b.h8	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus subtilis	AntiIsolate	isolate	86.75094143	82.49412327	65.94328268	97.3047885
+B. subtilis BJ63	b.BJ63	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus subtilis	AntiIsolate	isolate	86.25025731	84.15266453	70.64339802	97.41497218
+B. velezensis BJ82	b.BJ82	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus velezensis	AntiIsolate	isolate	84.8427	88.40792504	86.48387744	96.02085177
+B. velezensis BJ93	b.BJ93	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus velezensis	AntiIsolate	isolate	84.3874	88.48730934	65.0644401	96.5057919
+B. subtilis TY32	b.TY32	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus subtilis	AntiIsolate	isolate	76.51870149	79.53525417	50.70207111	95.63487901
+B. paralicheniformis BJ12	b.BJ12	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus paralicheniformis	AntiIsolate	isolate	68.98361728	71.29044088	67.16062384	91.79824379
+B. safensis TY68	b.TY68	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus safensis	AntiIsolate	isolate	59.93497766	52.75519262	59.75502733	94.85897479
+B. altitudinis BJ46	b.BJ46	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus altitudinis	AntiIsolate	isolate	58.97841065	22.57210357	0.797352189	92.08129048
+B. albus BJ71	b.BJ71	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus albus	AntiIsolate	isolate	37.39692688	37.98708989	1.381575647	0.217134419
+B. subtilis BJ114.2	b.BJ114.2	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus subtilis	AntiIsolate	isolate	28.21509438	40.37058687	-0.48142019	45.46765713
+B. bingmayongensis S10	b.S10	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus bingmayongensis	AntiIsolate	isolate	22.87648177	13.32744184	-11.5904418	1.152705999
+B. cereus LC21	b.LC21	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus cereus	AntiIsolate	isolate	20.44631722	23.57916878	-11.57790482	0.764753891
+B. cereus TY6	b.TY6	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus cereus	AntiIsolate	isolate	15.71009965	20.71739782	4.149741738	16.59689467
+P. sp003512445 BJ26	b.BJ26	Proteobacteria	Gammaproteobacteria	Enterobacterales	Erwiniaceae	Pantoea	Pantoea	Pantoea sp003512445	AntiIsolate	isolate	13.30960079	42.04618591	18.25259516	0.410516669
+P. agglomerans TH25	b.TH25	Proteobacteria	Gammaproteobacteria	Enterobacterales	Erwiniaceae	Pantoea	Pantoea	Pantoea agglomerans	AntiIsolate	isolate	12.3403199	25.3446492	17.17942932	46.69287323
+P. ananatis S15	b.S15	Proteobacteria	Gammaproteobacteria	Enterobacterales	Erwiniaceae	Pantoea	Pantoea	Pantoea ananatis	AntiIsolate	isolate	11.51815661	41.53642066	11.30835966	2.821955714
+B. licheniformis ZZ33	b.ZZ33	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus licheniformis	AntiIsolate	isolate	9.824185406	18.70523563	12.3802718	16.35673384
+B. subtilis TY58	b.TY58	Firmicutes	Bacilli	Bacillales	Bacillaceae	Bacillus	Bacillus	Bacillus subtilis	AntiIsolate	isolate	7.43034618	27.04386671	-21.54731458	0.281793104
+P. agglomerans LC6	b.LC6	Proteobacteria	Gammaproteobacteria	Enterobacterales	Erwiniaceae	Pantoea	Pantoea	Pantoea agglomerans	AntiIsolate	isolate	7.369803964	25.22130832	16.44350835	7.208849531
+P. brenneri LC4	b.LC4	Proteobacteria	Gammaproteobacteria	Enterobacterales	Erwiniaceae	Pantoea	Pantoea	Pantoea brenneri	AntiIsolate	isolate	7.329846102	26.39501493	24.1336944	12.11433239
+P. agglomerans LC1	b.LC1	Proteobacteria	Gammaproteobacteria	Enterobacterales	Erwiniaceae	Pantoea	Pantoea	Pantoea agglomerans	AntiIsolate	isolate	7.181517672	40.14621143	2.315580964	14.23553311
+M. brachiatum BJ39	b.BJ39	Proteobacteria	Alphaproteobacteria	Rhizobiales	Beijerinckiaceae	Methylobacterium-Methylorubrum	Methylobacterium-Methylorubrum	Methylobacterium brachiatum	AntiIsolate	isolate	1.595984131	16.73571788	-4.094579008	0.218453984
