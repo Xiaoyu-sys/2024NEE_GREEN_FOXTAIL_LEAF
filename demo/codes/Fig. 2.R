@@ -12,7 +12,7 @@ library(ggplot2 # Visualization
         chinamap$prov_name <- factor(chinamap$prov_name)
         
         
-        df <- subset(chinamap, prov_name == "ºÓÄÏÊ¡" |prov_name == "É½Î÷Ê¡" |prov_name == "ÉÂÎ÷Ê¡" |prov_name == "ºÓ±±Ê¡"|prov_name == "±±¾©ÊÐ") # to select the province corresponding to your sampling location
+        df <- subset(chinamap, prov_name == "æ²³å—çœ" |prov_name == "å±±è¥¿çœ" |prov_name == "é™•è¥¿çœ" |prov_name == "æ²³åŒ—çœ"|prov_name == "åŒ—äº¬å¸‚") # to select the province corresponding to your sampling location
         
         
         p <- ggplot(df, aes(x = prov_long, y = prov_lat,  
@@ -155,7 +155,7 @@ library(ggplot2 # Visualization
                                           nboot = 999)+
           geom_vline(xintercept = 5, linetype = 2) #xintercept and linetype are personal preferences based on the plot generated
         
-        #plot the result:Gap statistic (k)ÊýÖµ×î´óÊ±¶ÔÓ¦µÄk¼´Îª×î¼Ñ
+        #plot the result:Gap statistic (k)æ•°å€¼æœ€å¤§æ—¶å¯¹åº”çš„kå³ä¸ºæœ€ä½³
         dart.matx.gp.stat
         
         #based on the gapstat result compute the k-mean clustering
@@ -227,19 +227,19 @@ library(ggplot2 # Visualization
         e19.mean.core <- t(read.csv("data/ASV_table_bacteria.tsv",
                                     header = T,
                                     sep = "\t",
-                                    row.names = 1,check.names=F)) # ÐÐÎªÑù±¾Ãû
+                                    row.names = 1,check.names=F)) # è¡Œä¸ºæ ·æœ¬å
         
         # or core genera						  
         e19.mean.core <- read.csv("data/core bacterial genera.txt",
                                   header = T,
                                   sep = "\t",
-                                  row.names = 1,check.names=F) # ÐÐÎªÑù±¾Ãû 
+                                  row.names = 1,check.names=F) # è¡Œä¸ºæ ·æœ¬å 
         
         # env factors
         e19.mean.env <- read.csv("data/env.txt",
                                  header = T,
                                  sep = "\t",
-                                 row.names = 1,check.names=F) # ÐÐÎªÑù±¾Ãû
+                                 row.names = 1,check.names=F) # è¡Œä¸ºæ ·æœ¬å
         e19.mean.env <- scale(e19.mean.env, center = TRUE, scale = TRUE)						  
         
         #explore it 
@@ -298,4 +298,105 @@ library(ggplot2 # Visualization
                                           strata = NULL, na.rm = FALSE)
         #explore the matel test result
         mantel.test.otu.vs.dart
-        
+#############################################################################################################################
+## E ## 
+
+# this script refers to Thiergart et al.,(2020): Root microbiota assembly and adaptive differentiation among European Arabidopsis populations
+
+# Collinearity analysis of environmental factors
+library(pheatmap)
+library(psych)
+
+env=read.delim("leaf_16s/env.txt",row.names=1,check.name=F,sep="\t")
+res <- corr.test(env,env,method = "spearman",adjust = "fdr")
+
+# Setting the Threshold
+r_threshold <- 0.7
+p_value_threshold <- 0.01
+
+# filter
+filtered_data <- res$r
+filtered_data[abs(res$r) <= r_threshold | res$p.adj > p_value_threshold] <- NA
+
+pheatmap(filtered_data, fontsize_number=10,fontsize = 10,cluster_rows = F,
+cluster_cols = F,main="",cellheight=10,cellwidth = 10)
+
+
+# the explanation of environmental factors on community composition
+env_explain<-function(otu,group,env){
+  library(vegan)
+  library(tidyverse)
+  otu <- as.data.frame (t(otu))#Rows are sample names
+  otu=otu[match(rownames(group),rownames(otu)),]#
+  mat.dist<-as.matrix(vegdist(otu,method="bray")) #bray-curtis distance
+ env=env[match(rownames(group),rownames(env)),]
+  colnames(env)=c("pH","NO3","NH4","AK","AP","TK","TP","TN","SOC","CN","Altitude","Longitude","Latitude",'MAT','AT','RH','MAP','AS','RA')
+  env=select(env,-CN,-TN,-SOC,-Altitude,-Longitude,-Latitude,-RH,-AS,-AT) # to remove collinear environmental factors
+  
+  normalize <- function(x) {
+    return ((x - min(x)) / (max(x) - min(x)))
+  }
+  
+  env2=as.data.frame(lapply(env,normalize))
+  rownames(env2)=rownames(env);colnames(env2)=colnames(env)
+  
+  metadata=cbind(group,env2)
+  
+  ### loop into the fractions to test separately each fraction ###
+  result<-matrix(ncol=4,nrow=12)
+  tab<-paste("t", "L", sep="")
+  pat<-paste("L", sep = "-")
+  aa_pat=grep(pat,rownames(mat.dist))
+  aa_inter=intersect(rownames(mat.dist[aa_pat,]),rownames(metadata)) 
+  res=adonis(formula= mat.dist[aa_inter,aa_inter] ~ as.vector(metadata[aa_inter,"pH"])+ as.vector(metadata[aa_inter,"NO3"])+ as.vector(metadata[aa_inter,"NH4"])+ as.vector(metadata[aa_inter,"AK"])+ as.vector(metadata[aa_inter,"AP"])+ as.vector(metadata[aa_inter,"TK"])+ as.vector(metadata[aa_inter,"TP"])+as.vector(metadata[aa_inter,"MAT"])+as.vector(metadata[aa_inter,"MAP"])+as.vector(metadata[aa_inter,"RA"]), data=as.data.frame(metadata[aa_inter,]))
+  
+  for (e in 1:12){
+    
+    result[e,1]<-res$aov.tab$Df[e]
+    result[e,2]<-res$aov.tab$F.Model[e]
+    result[e,3]<-res$aov.tab$`Pr(>F)`[e]
+    result[e,4]<-res$aov.tab$R2[e]
+  }
+  
+  colnames(result)=c("L_Df","L_F","L_Pr","L_R2")
+  row.names(result)=c("pH","NO3","NH4","AK","AP","TK","TP",'MAT','MAP','RA',"Residuals", "Total")
+  result
+  result=as.data.frame(result)
+  
+  a=as.data.frame(t(select(result,contains("R2"))))
+  a=select(a,-Residuals,-Total,)
+  a_long <- as.data.frame(pivot_longer(a, cols = 1:ncol(a),names_to = "element", values_to = "content"))
+  a_long$element=factor(a_long$element,levels = c("pH","NO3","NH4","AK","AP","TK","TP",'MAT','MAP','RA'))
+  result2=result[match(a_long[,1],rownames(result)),]
+  a_long$P=result2$L_Pr
+  a_long[which(a_long$P>0.01),"sig"]<-"p>0.01";a_long[which(a_long$P< 0.01),"sig"]<-"p<0.01"
+  a_long$sig=factor(a_long$sig,levels=c("p<0.01","p>0.01"))
+  
+  results=list(a=result,b=a_long)
+  return(results)
+}
+
+##data of bacteria
+otu <- read.delim('leaf_16s/ASV_table_CSS.tsv', row.names = 1, sep = '\t', stringsAsFactors = FALSE, check.names = FALSE
+group=read.delim("leaf_16s/metadata.tsv",row.names = 1,check.names = F)
+env=read.delim("leaf_16s/env.txt",row.names=1,check.name=F,sep="\t")
+result1=env_explain(otu,group,env)
+
+##data of fungi
+otu_fun <- read.delim('leaf_its/ASV_table_CSS.tsv', row.names = 1, sep = '\t', stringsAsFactors = FALSE, check.names = FALSE)
+result2=env_explain(otu_fun,group,env)
+
+df1=result1$b;df1$Kingdom=c(rep("Bacteria",nrow(df1)))
+df2=result2$b;df2$Kingdom=c(rep("Fungi",nrow(df2)))
+df=rbind(df1,df2)
+
+p1=ggplot(df,aes(x = reorder(element,-content), y = content*100,fill=sig))+geom_bar(position="dodge",stat="identity")+
+  theme(panel.grid=element_blank(),panel.background=element_rect(fill='transparent',color='black'))+
+  labs(title="The whole community",x="",y="Explained variance (%) ")+
+  theme(axis.text.x=element_text(size=10,angle=0,vjust=0,hjust=0.5,color = "black"),
+        axis.text.y=element_text(size=10,color = "black"), legend.text=element_text(size=10),legend.position="right",legend.key.size=unit(0.3,"cm"))+
+  #theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())+
+  guides(fill=guide_legend(title=NULL))+theme(strip.text=element_text(size = rel(1),face="bold"),strip.background=element_rect(fill="white",colour="transparent"))+
+  theme(panel.grid=element_blank(),panel.background=element_rect(fill='transparent', color='black'))+
+  scale_fill_manual(values = c("#6DBB60","gray50"))+coord_flip()
+p1        
