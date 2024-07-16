@@ -307,7 +307,7 @@ library(ggplot2 # Visualization
 library(pheatmap)
 library(psych)
 
-env=read.delim("leaf_16s/env.txt",row.names=1,check.name=F,sep="\t")
+env=read.delim("data/env.txt",row.names=1,check.name=F,sep="\t")
 res <- corr.test(env,env,method = "spearman",adjust = "fdr")
 
 # Setting the Threshold
@@ -377,20 +377,13 @@ env_explain<-function(otu,group,env){
 }
 
 ##data of bacteria
-otu <- read.delim('leaf_16s/ASV_table_CSS.tsv', row.names = 1, sep = '\t', stringsAsFactors = FALSE, check.names = FALSE
-group=read.delim("leaf_16s/metadata.tsv",row.names = 1,check.names = F)
-env=read.delim("leaf_16s/env.txt",row.names=1,check.name=F,sep="\t")
-result1=env_explain(otu,group,env)
-
-##data of fungi
-otu_fun <- read.delim('leaf_its/ASV_table_CSS.tsv', row.names = 1, sep = '\t', stringsAsFactors = FALSE, check.names = FALSE)
-result2=env_explain(otu_fun,group,env)
-
-df1=result1$b;df1$Kingdom=c(rep("Bacteria",nrow(df1)))
-df2=result2$b;df2$Kingdom=c(rep("Fungi",nrow(df2)))
-df=rbind(df1,df2)
-
-p1=ggplot(df,aes(x = reorder(element,-content), y = content*100,fill=sig))+geom_bar(position="dodge",stat="identity")+
+otu <- read.delim('data/ASV_table_CSS.tsv', row.names = 1, sep = '\t', stringsAsFactors = FALSE, check.names = FALSE)
+group=read.delim("data/metadata.tsv",row.names = 1,check.names = F)        
+env=read.delim("data/env.txt",row.names=1,check.name=F,sep="\t")        
+result1=env_explain(otu,group,env)        
+df=result1$b
+        
+ggplot(df,aes(x = reorder(element,-content), y = content*100,fill=sig))+geom_bar(position="dodge",stat="identity")+
   theme(panel.grid=element_blank(),panel.background=element_rect(fill='transparent',color='black'))+
   labs(title="The whole community",x="",y="Explained variance (%) ")+
   theme(axis.text.x=element_text(size=10,angle=0,vjust=0,hjust=0.5,color = "black"),
@@ -398,5 +391,4 @@ p1=ggplot(df,aes(x = reorder(element,-content), y = content*100,fill=sig))+geom_
   #theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())+
   guides(fill=guide_legend(title=NULL))+theme(strip.text=element_text(size = rel(1),face="bold"),strip.background=element_rect(fill="white",colour="transparent"))+
   theme(panel.grid=element_blank(),panel.background=element_rect(fill='transparent', color='black'))+
-  scale_fill_manual(values = c("#6DBB60","gray50"))+coord_flip()
-p1        
+  scale_fill_manual(values = c("#6DBB60","gray50"))+coord_flip()     
