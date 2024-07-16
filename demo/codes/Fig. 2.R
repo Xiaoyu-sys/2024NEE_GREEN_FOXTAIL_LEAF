@@ -298,6 +298,46 @@ library(ggplot2 # Visualization
                                           strata = NULL, na.rm = FALSE)
         #explore the matel test result
         mantel.test.otu.vs.dart
+#####################################################################################################
+#calculate bray_curtis distance and perform PCoA analysis
+library(vegan)
+library(ape)
+library(ggplot2)
+
+## 
+otu <- read.delim('data/ASV_table_CSS.tsv', row.names = 1, sep = '\t', stringsAsFactors = FALSE, check.names = FALSE)
+otu <- as.data.frame (t(otu))
+
+group=read.delim("data/metadata.tsv",row.names = 1,check.names = F)
+otu=otu[match(rownames(group),rownames(otu)),]
+dis<-vegdist(otu,method="bray")
+
+bray.pc<-pcoa(dis,correction="cailliez")
+summary(bray.pc)
+head(bray.pc$values)
+bray.pc=bray.pc$vectors[,1:4] 
+bray.pc=bray.pc[match(rownames(group),rownames(bray.pc)),]
+bray.data <- cbind(bray.pc, group)
+
+colors7=c("#8ECFC9","#FFBE7A","#FA7F6F","#82B0D2","#BEB8DC","#E7DAD2","#96C37D")
+ggplot(bray.data, aes(x = Axis.1, y = Axis.2, color=group2)) +
+  geom_vline(xintercept=0,alpha = 0.3)+
+  geom_hline(yintercept=0,alpha = 0.3)+ 
+  geom_point(size =3, alpha = 0.9) + 
+  scale_color_manual(values = colors7) +
+  theme_bw() +
+  labs(x = "PCo 1 (14.98%)", y = "PCo 2 (9.48%)",title="Bacteria") +
+  theme(text = element_text(size = 15), legend.key = element_blank(),legend.position="right")+
+  guides(color=guide_legend(title="Sites"))+
+  theme(strip.text=element_text(size = rel(1),face="bold"),strip.background=element_rect(fill="white",colour="transparent"))+
+  theme(axis.text.x=element_text(angle =0,size=10,vjust=0,hjust=0.5,color="black",face = "bold"))+
+  theme(axis.text.y=element_text(size=10,color="black",face="bold"),legend.position = "right")+
+  theme(panel.grid=element_blank(),panel.background=element_rect(fill='transparent', color='black'))+
+  theme(legend.text=element_text(size=10))
+
+anosim(dis, group$group2,permutations = 999, distance = "bray")
+adonis2(dis ~ group$group2) 
+       
 #############################################################################################################################
 ## E ## 
 
