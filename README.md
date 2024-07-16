@@ -15,4 +15,4 @@ setwd("D:/demo") # Set the working directroy to your desired directory
 install.packages("readr") # install R packages you desired
 library(readr) # Loading R package you desired
 
-You can run the code based on the demo files (note: The ASV_table_CSS.tsv and ASV_table_bacteria.tsv is a subset of real ASV data).
+You can run the code based on the demo files.
