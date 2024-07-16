@@ -15,4 +15,4 @@ setwd("D:/demo") # Set the working directroy to your desired directory
 install.packages("readr") # install R packages you desired
 library(readr) # Loading R package you desired
 
-The demo file includs codes, data and output files. If you need, you can run it to obtain the figures shown in main text.
+The demo file includes codes, data and output files. If you need, you can run it to obtain the figures shown in main text.
